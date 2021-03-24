@@ -40,7 +40,7 @@ anodes. Need to think of a tidy way to add a wire across for the first boards.
 Untested due to the dodgy PLCC soldering mentioned above.
 
 ![Missing VDD](/audio/assets/missing-vdd.png)
-![Bodge Wire VDD](/audio/assets/bodge-vdd.png)
+![Bodge Wire VDD](/audio/assets/bodge-vdd.jpg)
 
 ## SMD resistors on unassembled side
 
