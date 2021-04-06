@@ -84,3 +84,13 @@ damage on Q803
 ![Transistor](/audio/assets/transistor.png)
 ![Transistor Magic Smoke](/audio/assets/blown-transistor.jpg)
 
+### Actually transistor pins are all incorrect
+
+Wiring through hole transistors on flying wires results in a working headphone amplifier
+
+![Transistor Pinout](/audio/assets/transistor-pins.png)
+
+## Cue / Master mix fader doesn't work
+This is a fxcking stupid circuit - not sure what I was thinking
+![CueMaster](/audio/assets/transistor-pins.png)
+
