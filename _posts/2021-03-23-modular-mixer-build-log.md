@@ -92,5 +92,5 @@ Wiring through hole transistors on flying wires results in a working headphone a
 
 ## Cue / Master mix fader doesn't work
 This is a fxcking stupid circuit - not sure what I was thinking
-![CueMaster](/audio/assets/transistor-pins.png)
+![CueMaster](/audio/assets/cue-mix.png)
 
