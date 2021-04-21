@@ -32,6 +32,8 @@ Need to desolder this one and redo it with a bit more care.
 *note* - not sure I'd use this IC again.. although the alternatives are a uC 
 with an ADC, or an array of OP amps with a resistor ladder.
 
+PLCC package has a different pin order.. pins are all in the wrong place on my footprint
+
 ## LM3914 Forgotten VDD Connection
 
 The schematic for the VU meter is missing a power connection across the LED
