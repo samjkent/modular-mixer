@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab&display=swap');
+
+body {
+    font-family: 'Zilla Slab', Courier New, Courier, serif;
+}
+
+a {
+    color: #000;    
+}
+
+.section {
+    min-height: 100vh;
+    padding: 2rem;
+    border-bottom: solid 3px #000;
+}
+
+.me {
+    clip-path: border-box;
+    background-image: url('images/me.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: #fff;
+    height: 50vh;
+    background-color: #fff;
+}
+
+.mixer, .mixer-channel, .enc-small, .enc-large, .midi-cpu, .enc-demo, .drum-machine {
+    clip-path: border-box;
+    background-image: url('images/mixer.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: #fff;
+}
+
+.mixer-channel {
+    background-image: url('images/mixer-isolator.svg');
+}
+
+.enc-small {
+    background-image: url('images/enc-small.svg');
+}
+
+.enc-large {
+    background-image: url('images/enc-large.svg');
+}
+
+.midi-cpu {
+    background-image: url('images/midi-cpu.svg');
+    height: 50%;
+}
+
+.enc-demo {
+    background-image: url('images/demo.gif');
+    height: 50%;
+}
+
+.drum-machine {
+    background-image: url('images/drum-machine.svg');
+}
+
+.splash ul {
+    padding: 0;
+    margin: 0;
+}
+
+.splash li {
+    padding: 1rem;
+    margin-bottom: .5rem;
+    list-style: none;
+    background-color: #80f2b0;
+}
+
+.splash li:hover {
+    background-color: #50d2a0;
+}
+
+.signal li {
+    list-style: disclosure-closed;
+}
+
+li.work {
+    border: .2rem solid #80f2b0;
+    background-color: #fff;
+}
+
