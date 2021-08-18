@@ -105,8 +105,8 @@
                     <img src="images/fader.png" alt="Fader"/>
                     <figcaption>Post Isolator</figcaption>
                 </figure>
-                <p>Post isolator the signal is split again. The complete post isolator signal is fed into the VU meter for visual feedback, and also sent to the 'fader' (in this case a rotary potentiometer) for adjusting the level of the signal in the mix.</p>
-                <p>In the example schematic the auxillary send is also connected to the prefader signal, to use this with external effects it may be more useful to connect this post-fader, or to add a switch or jumper to change between pre/post.</p>
+                    <p>Post isolator the signal is split again. The complete post isolator signal is fed into the VU meter for visual feedback, sent to the 'fader' (in this case a rotary potentiometer) for adjusting the level of the signal in the mix, and also to the cue bus (if the cue button has been pressed!).</p>
+                    <p>In the example schematic the auxillary send is also connected to the prefader signal, to use this with external effects it may be more useful to connect this post-fader, or to add a switch or jumper to change between pre/post.</p>
                     <p>Ideally, a Texas Instruments LM3916 would be used to visualise the audio signal and the schematic is designed for this. However, in the non-ideal world TI have discontinued all but the linearly scaled LM3914, and only manufacture it in an awkward 20 pin PLCC package. The layout and gerbers use the PLCC LM3914 but an alternative circuit should be considered for true logarithmic VU meters.</p>
                     <p>
                     There's nothing notable in the VU schematic, it is almost taken directly from the LM3916 datasheet, only with an additional summing amplifier to convert the stereo signal to mono.
