@@ -4,13 +4,13 @@
 
 <head>
 
-  <title>Sam Kent</title>
+  <title>Modular Mixer</title>
 
   <meta charset="UTF-8" />
 
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-  <meta name="description" content="Sam Kent's personal website, showcasing some electronic design and embedded engineering" />
+  <meta name="description" content="Overview of the the modular mixer" />
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
   <script src="https://kit.fontawesome.com/2bea0d932f.js" crossorigin="anonymous" defer></script>
@@ -24,26 +24,41 @@
   <div class="container">
 
     <div class="row section splash">
+      <div class="col-sm-12">
+        <a href="/"><< Back to Sam Kent</a>
+      </div>
       <div class="col-sm-6">
-            <h1><a href="/">Rotary Mixer</a></h1>
+            <h1><a href="/">Modular Mixer</a></h1>
             <ul>
+                <li class="mixer"></li>
+                <li class="invert">Eurorack compatible modules for a stereo DJ mixer, with 2.5mm header connections for XLR and line level outputs, cue-ing system with a headphone driver, and VU meters.</li>
             </ul>
       </div>
       <div class="col-sm-6">
             <h1>Contents</h1>
             <ul>
-                <li>Scroll for more &darr;</li>
+                <li><a href="#mixer">Overview</a></li>
+                <li><a href="#channel">2 Band Isolator Channel</a> | <a href="https://github.com/samjkent/mixer-isolator-channel">KiCAD Project</a></li>
+                <li><a href="#main">Main Channel</a> | <a href="https://github.com/samjkent/mixer-master-channel">KiCAD Project</a></li>
+                <li><a href="#psu">Power Supply</a></li>
             </ul>
       </div>
     </div>
 
     <div id="mixer" class="row section">
-      <div class="col-sm-3 mixer"></div>
-      <div class="col-sm-3 mixer-channel"></div>
       <div class="col-sm-6">
-            <h2>Modular Rotary Mixer</h2>
-            <p>Eurorack compatible modules for a stereo DJ mixer, with 2.5mm header connections for XLR and line level outputs, cue-ing system with a headphone driver, and VU meters.</p>
-            <p>The design is op-amp based, with filters implemented as 12db/oct active inverting filters, 1kohm output impedances, and buffered potentiometes acting as voltage dividers for the controls</p>
+            <h3>Project Overview</h3>
+            <p>Inspired by Eurorack modular synthesizers and the boutique mixer market, the project aims to design and build a simple and customisable DJ mixer. Ripping the faceplate off most mixers the design is already fairly modular, but only in that mixer's specific form factor. Taking the Xone:92 as an example, each of the channels are identical boards feeding their outputs onto mix buses to be summed, so with a custom case it could be expanded to an N channel mixer, with custom designs added as additional channels [Ref 1]. </p>
+             <figure>
+      <img src="images/xone92.png" alt="Xone:92 mix bus block diagram"/>
+  <figcaption>Ref 1 - Xone:92 mix bus (Xone:92 Service Manual AP5296 Page 9)</figcaption>
+</figure>
+        <p>Combining this idea with the Eurorack ethos, the project aims to build a fully customisable system, with N channels that can be mix and matched between isolators, filters, fx units, and traditional eurorack modules</p>
+      </div>
+      <div class="col-sm-6">
+            <h3>Initial Design</h3>
+            <p>Eurorack compatible modules for a stereo DJ mixer, with 2.54mm header connections for XLR and line level outputs, cue-ing system with a headphone driver, and VU meters.</p>
+            <p>The design is op-amp based, with filters implemented as 12db/oct active inverting filters, 10 kohm output impedances, and buffered potentiometes acting as voltage dividers for the controls</p>
             <p>The signal path of the initial 2 band isolator channel design is as follows</p>
             <ul class="signal">
                 <li>a line level stereo input </li>
@@ -52,16 +67,126 @@
                 <li>split the signal with low pass and high pass filters  </li>
                 <li>a potentiometer for the low pass, and a potentiometer for the high pass allow the signal to be shaped  </li>
                 <li>the remaining signals are summed  </li>
-                <li>the summed signal is sent to the channel's outputs; a potentiometer controls how much is sent to the master bus, a button controls whether the signal is sent to the cue bus, and the full signal is sent to the IC controlling the LED level meter</li>
+                <li>the summed signal is sent to the channel's outputs; a potentiometer controls how much is sent to the main bus, a button controls whether the signal is sent to the cue bus, and the full signal is sent to the IC controlling the LED level meter</li>
             </ul>
-            <p>The signal path of the master channel is simpler, summing together the different audio buses and then outputting the combined signals</p>
+            <p>The signal path of the main channel is simpler, summing together the different audio buses and then outputting the combined signals</p>
             <ul class="signal">
-                <li>cue, aux, and master busses enter summing amplifiers; the 1k resistors on the channel outputs ensure that the channels are equally summed</li>
-                <li>the master signal is fed into the LED level meter, the cue summing amplifier (via a voltage divider), to a line level buffered output, and a balanced output circuit</li>
+                <li>cue, aux, and main busses enter summing amplifiers; the 10k resistors on the channel outputs ensure that the channels are equally summed</li>
+                <li>the main signal is fed into the LED level meter, the cue summing amplifier (via a voltage divider), to a line level buffered output, and a balanced output circuit</li>
                 <li>all of these outputs have buffered voltage dividers controlling the level</li>
                 <li>the headphone output is op amp based, but when built with a high current op amp such as the Texas Instruments OPA1688 (75mA / channel), it can provide more than enough power to drive monitoring headphones</li>
             </ul>
-            <p>The idea is to build a fully customisable system, with N channels that can be mix and matched between isolators, filters, fx units, and traditional eurorack modules</p>
+      </div>
+    </div>
+
+    <div id="channel" class="row section">
+      <div class="col-sm-12">
+            <h3>Isolator Channel | <a href="https://github.com/samjkent/mixer-isolator-channel">KiCAD Project</a></h3>
+      </div>
+      <div class="col-sm-3">
+           <figure>
+               <img src="images/mixer-isolator.svg" alt="Isolator Channel"/>
+               <figcaption>A render of the 2 Band Isolator Channel gerbers</figcaption>
+           </figure>
+      </div>
+      <div class="col-sm-9">
+                <figure class="float-right">
+                    <img src="images/isolator-buffers.png" alt="Isolator Channel"/>
+                    <figcaption>Input and Output buffers</figcaption>
+                </figure>
+                <p>The channel input begins by applying a high pass filter to the signal, and amplifying it with a gain of 5. This amplified signal is then trimmed by a voltage divider before being fed into the isolator circuit.</p>
+                <p>The amplified signal is then fed into two filters, a low pass and a high pass. Both filters are 12dB/octave filters with identical cut off frequencies i.e. the isolator crossover frequency. As both filters have the same cut off frequency the overall frequency response should be fairly flat.</p>
+                <p>The output levels of these two filters are then fed into potentiometers to allow a user to reduce the volume of either the high or low passed signals while mixing. Once the level for each filter output is set, the 2 signals are summed together to recreate a single audio signal. This is done independently for both the left and right signals, with dual gang potentiometers ensuring that the filters outputs can be controlled in stereo.</p>
+                <figure class="">
+                    <img src="images/isolator.png" alt="Isolators"/>
+                    <figcaption>High and Low Pass filters</figcaption>
+                </figure>
+                <figure class="float-right">
+                    <img src="images/fader.png" alt="Fader"/>
+                    <figcaption>Post Isolator</figcaption>
+                </figure>
+                <p>Post isolator the signal is split again. The complete post isolator signal is fed into the VU meter for visual feedback, and also sent to the 'fader' (in this case a rotary potentiometer) for adjusting the level of the signal in the mix.</p>
+                <p>In the example schematic the auxillary send is also connected to the prefader signal, to use this with external effects it may be more useful to connect this post-fader, or to add a switch or jumper to change between pre/post.</p>
+                    <p>Ideally, a Texas Instruments LM3916 would be used to visualise the audio signal and the schematic is designed for this. However, in the non-ideal world TI have discontinued all but the linearly scaled LM3914, and only manufacture it in an awkward 20 pin PLCC package. The layout and gerbers use the PLCC LM3914 but an alternative circuit should be considered for true logarithmic VU meters.</p>
+                    <p>
+                    There's nothing notable in the VU schematic, it is almost taken directly from the LM3916 datasheet, only with an additional summing amplifier to convert the stereo signal to mono.
+                    </p>
+                <figure class="">
+                    <img src="images/vu.png" alt="VU"/>
+                    <figcaption>VU meters using LM391x</figcaption>
+                </figure>
+                    <p>
+                    Finally, and crucially the output headers. Each channel includes a standard 16 pin eurorack power header to provide +/- 12V, 5V, and GND. The Eurorack connector also has 4 additional pins that are typically used for Gate and Control Voltage (CV) signals, which could have been repurposed as bus channels, but would have added compatibility issues if the mixer was used in the same rack as standard Eurorack modules.
+                    </p>
+                    <p>To keep in spec with other modules, a new 8 pin connector is used, with stereo connections for: input, main output bus, headphone cue bus, and an aux send bus.</p>
+                <figure class="">
+                    <img src="images/channel-outputs.png" alt="Channel Outputs"/>
+                    <figcaption>Channel output headers</figcaption>
+                </figure>
+                <p>All in all it's a fairly straightforward way to mix, but there's definitely room for some improvement:
+                <ul>
+                    <li>Current potentiometer is the Bourns PTV112, the shaft wobbles a bit, and it doesn't feel well made</p>
+                    <li>There's only just enough space at the top and bottom of the board for mounting rails, metal mounting rails can cause a short circuit</p>
+                </ul>
+                </p>
+      </div>
+    </div>
+    
+    <div id="main" class="row section">
+      <div class="col-sm-12">
+        <h3>Main Channel | <a href="https://github.com/samjkent/mixer-master-channel">KiCAD Project</a></h3>
+      </div>
+      <div class="col-sm-3">
+           <figure>
+               <img src="images/mixer-main.svg" alt="Main Channel"/>
+               <figcaption>A render of the main channel gerbers</figcaption>
+           </figure>
+      </div>
+      <div class="col-sm-9">
+                <figure class="float-right">
+                    <img src="images/connector-main.png" alt="Main Channel Connectors"/>
+                    <figcaption>Main Channel Connectors</figcaption>
+                </figure>
+                <figure class="float-right">
+                    <img src="images/summer.png" alt="Summing Amplifier"/>
+                    <figcaption>Summing Amplifier</figcaption>
+                </figure>
+                <p>The main channel takes inputs from the various busses and sums them, as each output has a 10k resistor on the end of it any number of channels can be connected to the amplifer and they will be summed equally.</p>
+                <p>The summed main bus is then sent to two buffered voltage dividers to allow a user to set two independent output levels: monitor, and main outputs. Typically one would be connected to a small monitor speaker for the DJ, and the other to the sound system.</p>
+                <p>The previous two signals are both unbalanced and line level, which is probably fine for use at home, but a balanced output is usually needed for a big rig. So, the master output is also connected to a circuit that generates the required balanced signal. On the example schematic, all outputs are to 2.54mm headers and need connecting to RCA / XLR sockets.</p>
+                <figure class="">
+                    <img src="images/balanced.png" alt="Balanced Amplifier"/>
+                    <figcaption>Balanced Output</figcaption>
+                </figure>
+                <figure class="float-right">
+                    <img src="images/cue.png" alt="CUE Sum"/>
+                    <figcaption>Cue summing</figcaption>
+                </figure>
+                <figure class="float-right">
+                    <img src="images/opa.png" alt="opa1688"/>
+                    <figcaption>Headphone Amplifier OPA1688</figcaption>
+                </figure>
+                <p>The cueing circuit takes the sum of everything on the cue bus, plus an amount of the main determined by a voltage divider. This allows a DJ to add N% of the main output into their headphones to help mix when there is a poor/non-existent monitoring set up.</p>
+                <p>Having originally built a transistor push-pull amplifier to drive the headphones, I've found that it's simpler and easier (JLCPCB will even fit it) to use a high current op-amp that has built in short circuit protection - the Texas Instruments OPA1688. Inserting/removing headphones shorts the output and has caused me transistor problems.</p>
+                <p>The VU meter on the main channel is only for the main mix bus, and is unaffected by any of the controls on the module. It follows the same LM391x schematic as the isolator channel, but with a seperate meter for each stereo channel rather than a summed signal.</p>
+                <p>Again, it works, but there are some changes that could be made:
+                <ul>
+                    <li>Upgrade the potentiometers</li>
+                    <li>Alternate LED driver for the VU meter. No modern chip exists, so either swap to a SOIC-16 LM3916 clone or use a microcontroller</li>
+                </ul>
+                </p>
+      </div>
+    </div>
+    
+    <div id="psu" class="row section">
+      <div class="col-sm-12">
+        <h3>Power Supply</h3>
+        <p>Thanks to the modularity of Eurorack any modular power supply can be used! In this design a custom one is built, but all it does is take a 18-36V DC signal, run it through a DKA30B-12 DC-DC converter to provide the required +/-12V power rails. A ST L7805 is used to generate the 5V rail.</p>
+        <p>An additional feature of this custom PSU is two phono preamps, which perhaps should be moved to the channel in future revisions.</p>
+        <figure class="">
+            <img src="images/psu.svg" alt="PSU"/>
+            <figcaption>Power Supply Overview</figcaption>
+        </figure>
       </div>
     </div>
 

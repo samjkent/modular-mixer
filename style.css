@@ -14,20 +14,19 @@ a {
     border-bottom: solid 3px #000;
 }
 
-.me {
+.mixer {
     clip-path: border-box;
-    background-image: url('images/me.jpg');
+    background-image: url('images/mixer.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     color: #fff;
-    height: 50vh;
+    height: 60vh;
     background-color: #fff;
 }
 
-.mixer, .mixer-channel, .enc-small, .enc-large, .midi-cpu, .enc-demo, .drum-machine {
+.mixer-channel, .enc-small, .enc-large, .midi-cpu, .enc-demo, .drum-machine {
     clip-path: border-box;
-    background-image: url('images/mixer.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
@@ -80,8 +79,38 @@ a {
     list-style: disclosure-closed;
 }
 
-li.work {
+li.invert {
     border: .2rem solid #80f2b0;
     background-color: #fff;
 }
 
+img {
+    width: 100%;
+    max-height: 80vh;
+    border: .2rem solid #80f2b0;
+}
+
+figcaption {
+    border: .2rem solid #80f2b0;
+    background-color: #80f2b0;
+    padding: 1rem;
+}
+
+@media (min-width: 576px) {
+.float-left {
+    float: left;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.float-right {
+    float: right;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+figure.float-left, figure.float-right {
+    max-width: 20rem;
+    clear: both;
+}
+
+}
