@@ -85,7 +85,7 @@ li.invert {
 }
 
 img {
-    width: 100%;
+    max-width: 100%;
     max-height: 80vh;
     border: .2rem solid #80f2b0;
 }
@@ -94,6 +94,11 @@ figcaption {
     border: .2rem solid #80f2b0;
     background-color: #80f2b0;
     padding: 1rem;
+}
+
+li.ext {
+    background-color: #fff;
+    border: .2rem solid #80f2b0;
 }
 
 @media (min-width: 576px) {

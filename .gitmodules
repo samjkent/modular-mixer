@@ -1,0 +1,6 @@
+[submodule "mixer-master-channel"]
+	path = mixer-master-channel
+	url = https://github.com/samjkent/mixer-master-channel
+[submodule "mixer-isolator-channel"]
+	path = mixer-isolator-channel
+	url = https://github.com/samjkent/mixer-isolator-channel

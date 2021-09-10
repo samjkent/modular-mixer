@@ -28,7 +28,7 @@
         <a href="/"><< Back to Sam Kent</a>
       </div>
       <div class="col-sm-6">
-            <h1><a href="/">Modular Mixer</a></h1>
+            <h1><a href="https://github.com/samjkent/modular-mixer">Modular Mixer</a></h1>
             <ul>
                 <li class="mixer"></li>
                 <li class="invert">Eurorack compatible modules for a stereo DJ mixer, with 2.54mm header connections for XLR and line level outputs, cue-ing system with a headphone driver, and VU meters.</li>
@@ -37,10 +37,13 @@
       <div class="col-sm-6">
             <h1>Contents</h1>
             <ul>
+                <li class="ext"><a href="https://github.com/samjkent/modular-mixer">View on GitHub</a></li>
                 <li><a href="#mixer">Overview</a></li>
                 <li><a href="#channel">2 Band Isolator Channel</a> | <a href="https://github.com/samjkent/mixer-isolator-channel">KiCAD Project</a></li>
                 <li><a href="#main">Main Channel</a> | <a href="https://github.com/samjkent/mixer-master-channel">KiCAD Project</a></li>
                 <li><a href="#psu">Power Supply</a></li>
+                <li><a href="#trouble">Troubleshooting</a></li>
+                <li><a href="#future">Future Work</a></li>
             </ul>
       </div>
     </div>
@@ -187,6 +190,82 @@
             <img src="images/psu.svg" alt="PSU"/>
             <figcaption>Power Supply Overview</figcaption>
         </figure>
+      </div>
+    </div>
+    
+    <div id="trouble" class="row section">
+      <div class="col-sm-12">
+        <h3>Troubleshooting</h3>
+        <p>An overview of issues I encountered whilst building this prototype</p>
+        <p>First mistake was to order my parts from Mouser, 2 weeks later they’ve been FedEx’d from Texas and it’s time to discover the hardware mistakes.</p>
+        <h4>Clearance at the top and bottom of the PCBs</h4>
+        <p>There's not quite enough clearance on the PCBs to the rack rails. I've had to wedge a piece of cardboard in at the top of the main channel to stop it from shorting against the rails.</p>
+        <h4 id="psu-board">PSU Board</h4>
+        <p>Soldered the Meanwell DC-DC Converter to the PCB and hooked up a power supply to the input. The 12V, -12V, and 5V LEDs lit up briefly, and then turned off. The PSU showed 19V and 0.00A.</p>
+        <p>Replacing the underspecced <a href="https://datasheet.lcsc.com/szlcsc/1811061725_ST-Semtech-1N4148W_C81598.pdf">1N4148W</a> diode with a short fixed this. The DC-DC convertor will survive reverse polarity so this diode was unecessary to start with.</p>
+        <figure>
+        <img src="images/psu.jpg" alt="PSU" /><figcaption aria-hidden="true">PSU</figcaption>
+        </figure>
+        <h4 id="lm3914-plcc-package">LM3914 PLCC Package</h4>
+        <p>During the first build the PLCC package wasn’t soldered correctly. Supposedly a package that is socket and SMD compatible, but it’s a definitely a pain to do by hand.</p>
+        <p>Need to desolder this one and redo it with a bit more care.</p>
+        <figure>
+        <img src="images/plcc.jpg" alt="PLCC" /><figcaption aria-hidden="true">PLCC</figcaption>
+        </figure>
+        <p><em>note</em> - not sure I’d use this IC again.. although the alternatives are a uC with an ADC, or an array of OP amps with a resistor ladder.</p>
+        <p>PLCC package has a different pin order.. pins are all in the wrong place on my footprint</p>
+        <h4 id="lm3914-forgotten-vdd-connection">LM3914 Forgotten VDD Connection</h4>
+        <p>The schematic for the VU meter is missing a power connection across the LED anodes. Need to think of a tidy way to add a wire across for the first boards.</p>
+        <p>Untested due to the dodgy PLCC soldering mentioned above.</p>
+        <p><img src="images/missing-vdd.png" alt="Missing VDD" /> <img src="images/bodge-vdd.jpg" alt="Bodge Wire VDD" /></p>
+        <h4 id="smd-resistors-on-unassembled-side">SMD resistors on unassembled side</h4>
+        <p>After checking and approving the Schematics, PCBs, and component list, I noticed that R103 and R104 (10k resistors) were on the front side on the PCB and were not going to be assembled in the factory.</p>
+        <figure>
+        <img src="images/unassembled-smd.png" alt="R103 and R104" /><figcaption aria-hidden="true">R103 and R104</figcaption>
+        </figure>
+        <p>Ordered some 10k 0402 resistors and manually fitted them</p>
+        <p><img src="images/0402.jpg" alt="Soldering 0402" /> <img src="images/0402-soldered.jpg" alt="Soldered 0402" /></p>
+        <h4 id="input-gain-send-pots-are-anti-clockwise">Input Gain / Send Pots are Anti-Clockwise</h4>
+        <p>Pins 1 and 3 need swapping. The input gain maxes out at only 2x which isn’t a huge amount. Maybe 50k Input Gain pots to crank the tracks.</p>
+        <h4 id="cue-switch-is-reversed">Cue switch is reversed</h4>
+        <p>All cue switches need to have the same orientation, plus the LEDs aren’t working</p>
+        <p>The switch is a pretty bad solution. An Analog Switch IC may be a better option. One SPDT switch/button can control the ICs. Example IC: £0.0451 <a href="https://datasheet.lcsc.com/szlcsc/Shanghai-Belling-BL1551_C82528.pdf">BL1551</a></p>
+        <h4 id="channel-pcbs-are-too-short">Channel PCBs are too short</h4>
+        <p>The channel PCBs are too short and the screw holes don’t line up perfectly. It’s possible to screw it in, but it doesn’t quite fit, and leaves very little clearance for components.</p>
+        <figure>
+        <img src="images/short-pcb.jpg" alt="Short PCBs" /><figcaption aria-hidden="true">Short PCBs</figcaption>
+        </figure>
+        <h4 id="headphone-amp---pnp-the-wrong-way-round">Headphone Amp - PNP the wrong way round</h4>
+        <p>Plugging in the master channel can result in some magic smoke - the PNP transistors in the headphone amplifier are the wrong way round. Some visible damage on Q803</p>
+        <p><img src="images/transistor.png" alt="Transistor" /> <img src="images/blown-transistor.jpg" alt="Transistor Magic Smoke" /></p>
+        <h3 id="actually-transistor-pins-are-all-incorrect">Actually transistor pins are all incorrect</h3>
+        <p>Wiring through hole transistors on flying wires results in a working headphone amplifier</p>
+        <figure>
+        <img src="images/transistor-pins.png" alt="Transistor Pinout" /><figcaption aria-hidden="true">Transistor Pinout</figcaption>
+        </figure>
+        <h4 id="cue-master-mix-fader-doesnt-work">Cue / Master mix fader doesn’t work</h4>
+        <p>This is a fucking stupid circuit - not sure what I was thinking <img src="images/cue-mix.png" alt="CueMaster" /></p>
+        <h4>No summing resistors on the updated CUE/MASTER knob</h4>
+        <p>Adding resistors between the potentiometer and summing input solves this, however the profile ends up curved and can never reach zero master due to the virtual ground at the summing input</p>
+        <figure>
+        <img src="images/additional-resistors.png" alt="Additional Summing Resistors" /><figcaption aria-hidden="true">Additional Resistors</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div id="future" class="row section">
+      <div class="col-sm-12">
+        <h3>Future Work</h3>
+        <p>As it stands, it's a working mixer that I use day to day. However, there are a few changes for future versions:</p>
+        <ul>
+            <li>Different pots, the current PTV112s are a bit flimsy. Ideally I'll add a second footprint for a choice of cheap vs quality. Alps RK27 are the hi-fi standard but may be too large to squeeze into a 6hp channel.</li>
+            <li>Move pots to feedback resistors. This will remove the need for a lot of the buffer amplifiers and reduce the chip count</li>
+            <li>With a reduced chip count the phono stage should definitely be added to the channels</li>
+            <li>Add kill buttons to isolators. Instakill vs turning the potentiometer.</li>
+            <li>Alternate VU driver. The linear LM3914 isn't ideal, neither is the gigantic PLCC package.</li>
+            <li>Replace all filters and attentuators with VCF/VCAs. Then additional control signals can be fed in to really integrate it into a modular system. JLCPCB stock LM13700 so assembly is still simple</li>
+            <li>Additonal channel types! Faders, filters, EQs, FX.. all are possible</li>
+        </ul>
       </div>
     </div>
 
